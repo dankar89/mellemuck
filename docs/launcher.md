@@ -22,9 +22,13 @@ instead of text, nothing that needs reading to understand.
   and passes its arguments on; output goes to `launcher.log`. No Python on
   the player's machine; the embedded one has no tkinter, so the folder
   dialog on Windows is PowerShell's `FolderBrowserDialog`.
-- Straight into a game, e.g. for a shortcut: `"Mulle Meck.exe" --play
-  bygger-bilar` (no separate exe per game; the user asked, we agreed one is
-  enough).
+- Straight into a game: `"Mulle Meck.exe" --play bygger-bilar`. Since
+  0.1.0 (2026-10-17) the package has a starter per game next to it, `Bygg
+  bilar.exe`, `Bygg båtar.exe`, `Bygg hus.exe` (`starter.c` built with
+  `-DPLAY_ID`, icons in `launcher/icons/`), and the Linux package start
+  scripts of the same names. A game not found yet opens the launcher on it.
+  Moved out of the folder, a starter says so (in Swedish) and how to make a
+  Desktop shortcut instead.
 - Fullscreen by default, games and launcher alike: the launcher writes
   `fullscreen=true` into `scummvm.ini` when it is missing and follows that
   setting itself, so the pause menu's Helskärm / Visa i fönster decides
