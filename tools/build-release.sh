@@ -41,7 +41,7 @@ texts() {
 }
 
 W="$STAGE/windows/MulleMeck"
-for f in "Mulle Meck.exe" scummvm.exe SDL2.dll data runtime linux; do
+for f in "Mulle Meck.exe" "Bygg bilar.exe" "Bygg båtar.exe" "Bygg hus.exe" scummvm.exe SDL2.dll data runtime linux; do
 	cp -a "$WIN/$f" "$W/"
 done
 settings "$W/scummvm.ini"

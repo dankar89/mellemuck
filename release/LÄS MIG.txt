@@ -41,6 +41,13 @@ SÅ HÄR KOMMER DU IGÅNG
 
 Med pilarna (eller handkontrollen) bläddrar du mellan spelen.
 
+Nästa gång kan du starta ett spel direkt: "Bygg bilar.exe", "Bygg
+båtar.exe" eller "Bygg hus.exe" i mappen. Vill du ha ett spel på
+Skrivbordet: högerklicka på filen, välj "Skicka till" och sedan
+"Skrivbord (skapa genväg)". (I Windows 11 ligger "Skicka till" under
+"Visa fler alternativ".) Dra inte själva filen ur mappen: då hittar den
+inte resten av Mulle Meck.
+
 
 SKARPARE BILDER (HD)
 --------------------

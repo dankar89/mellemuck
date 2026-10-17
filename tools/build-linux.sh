@@ -103,6 +103,14 @@ HERE="$(cd "$(dirname "$0")" && pwd)"
 # -s and PYTHONNOUSERSITE: only the package's own libraries, never the system user's.
 PYTHONNOUSERSITE=1 PYTHONPATH="$HERE/app" exec "$HERE/runtime/bin/python3" -s -m launcher --root "$HERE" "$@"
 SH
+# A start script per game, straight into it, as the Windows package's
+# "Bygg bilar.exe" and so on.
+for game in "bygger-bilar|Bygg bilar" "bygger-batar|Bygg båtar" "bygger-hus|Bygg hus"; do
+	id="${game%%|*}" title="${game#*|}"
+	printf '#!/bin/sh\n# %s med Mulle Meck (the launcher opens on it if it is not found yet).\nexec "$(dirname "$0")/Mulle Meck" --play %s "$@"\n' \
+		"$title" "$id" >"$DIST/$title"
+	chmod +x "$DIST/$title"
+done
 chmod +x "$DIST/Mulle Meck" "$DIST/scummvm"
 
 echo "built: $DIST ($(du -sh "$DIST" | cut -f1))"

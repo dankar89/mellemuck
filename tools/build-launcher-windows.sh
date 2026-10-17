@@ -68,6 +68,20 @@ echo '1 ICON "icon.ico"' > "$BUILD/icon.rc"
 x86_64-w64-mingw32-windres "$BUILD/icon.rc" -O coff -o "$BUILD/icon.o"
 x86_64-w64-mingw32-gcc -O2 -municode -mwindows -o "$DIST/Mulle Meck.exe" "$ROOT/launcher/starter.c" "$BUILD/icon.o"
 x86_64-w64-mingw32-strip "$DIST/Mulle Meck.exe"
+# A starter per game, straight into it (--play), with its own icon
+# (launcher/icons/: Lucide's car, sailboat and house in the launcher's style).
+while IFS='|' read -r id title; do
+	cp "$ROOT/launcher/icons/$id.ico" "$BUILD/$id.ico"
+	echo "1 ICON \"$id.ico\"" > "$BUILD/$id.rc"
+	x86_64-w64-mingw32-windres "$BUILD/$id.rc" -O coff -o "$BUILD/$id.o"
+	x86_64-w64-mingw32-gcc -O2 -municode -mwindows "-DPLAY_ID=L\"$id\"" -o "$DIST/$title.exe" \
+		"$ROOT/launcher/starter.c" "$BUILD/$id.o"
+	x86_64-w64-mingw32-strip "$DIST/$title.exe"
+done <<'EOF'
+bygger-bilar|Bygg bilar
+bygger-batar|Bygg båtar
+bygger-hus|Bygg hus
+EOF
 
 # The Linux package (tools/build-linux.sh), which "copy to Steam Deck" sends,
 # without what a Deck does not need (launcher/deck.py NOT_ON_DECK_*: numpy,

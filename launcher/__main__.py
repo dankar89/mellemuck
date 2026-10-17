@@ -36,13 +36,20 @@ def main():
 	if sys.stderr is None:  # pythonw (the packaged launcher): no console, so a log
 		sys.stderr = sys.stdout = open(args.root / "launcher.log", "w", encoding="utf-8", buffering=1)
 	if args.play:
-		# A shortcut straight into one game (e.g. a Steam shortcut per game).
+		# Straight into one game: its starter next to the launcher ("Bygg
+		# bilar.exe"), a shortcut, a Steam entry. A game not found here yet
+		# (the starter used before "Hitta spelet") opens the launcher on it.
+		from . import discs
 		from .catalog import GAMES
-		from .library import Game
+		from .library import Game, find_file
 		from .ui import start_game
 		info = next((g for g in GAMES if g.id == args.play), None)
-		process = start_game(args.root, Game(info, args.root.resolve())) if info else None
-		sys.exit(process.wait() if process else 1)
+		game = Game(info, args.root.resolve()) if info else None
+		if (game and info.playable and find_file(game.folder, info.marker) is not None
+				and discs.install(info, game.folder)):
+			sys.exit(start_game(args.root, game).wait())
+		if info:
+			args.focus = GAMES.index(info)
 	w, h = (int(v) for v in args.size.lower().split("x"))
 	from .ui import fullscreen_setting
 	fullscreen = not (args.window or args.shot) and fullscreen_setting(args.root)

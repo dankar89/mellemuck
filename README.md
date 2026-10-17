@@ -56,6 +56,9 @@ skivavbild (`.iso`) eller `.zip` med spelet.
 3. Klicka **Hitta spelet**.
 4. Klicka på den gula knappen **Spela**.
 
+Nästa gång kan du starta ett spel direkt med **Bygg bilar.exe**, **Bygg
+båtar.exe** eller **Bygg hus.exe** i mappen.
+
 Skarpare bilder: klicka **Gör HD-bilder** (15-50 minuter per spel, du kan
 spela under tiden). Allt annat, som Steam Deck och handkontroll, står i
 **LÄS MIG.txt** i mappen.
