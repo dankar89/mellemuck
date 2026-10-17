@@ -3,8 +3,8 @@ MULLE MECK - de gamla spelen på en ny dator
 Version {VERSION}
 
 Här kan du spela de gamla Mulle Meck-spelen från 90-talet på en vanlig
-dator med Windows 10 eller 11, och på Steam Deck. Med handkontroll om du
-vill, och med skarpare bilder (HD) om du vill.
+dator med Windows 10 eller 11, och på Steam Deck, med skarpare bilder (HD)
+om du vill. Handkontroll går också, men är inte så vältestat än.
 
 Testat på Windows och Steam Deck. Linux-versionen är inte testad på andra
 datorer än Steam Deck.
@@ -58,6 +58,9 @@ spela med de vanliga bilderna.
 
 SÅ STYR DU
 ----------
+
+Handkontrollen är ny och inte så vältestad än. Krånglar den, använd musen
+och berätta gärna vad som hände (se OM NÅGOT KRÅNGLAR).
 
   Mus                 som i originalet
   Handkontroll        vänster spak flyttar handen, A klickar

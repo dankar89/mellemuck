@@ -1,8 +1,7 @@
 # Mulle Meck på en ny dator
 
 De gamla Mulle Meck-spelen från 90-talet, spelbara igen på Windows 10/11 och
-Steam Deck. Samma spel som förr, men med skarpare bilder, handkontroll och
-utan krångel.
+Steam Deck. Samma spel som förr, men med skarpare bilder och utan krångel.
 
 > **Testat på Windows och Steam Deck.** Det finns en Linux-version också,
 > men den är inte testad på andra datorer än Steam Deck.
@@ -22,8 +21,9 @@ utan krångel.
   exempel havet i Bygg båtar).
 - **Skarpare bilder (HD).** Spelets bilder ritas om i högre upplösning, på
   din egen dator. Byt mellan HD och originalbilderna med F6.
-- **Handkontroll.** Hela spelet går att spela med handkontroll: flytta
-  handen med spaken, kör bilen och båten dit spaken pekar.
+- **Handkontroll (inte så vältestat än).** Flytta handen med spaken, kör
+  bilen och båten dit spaken pekar. Det är nytt och kan krångla; berätta
+  gärna hur det går.
 - **Steam Deck.** Kopiera över allt från datorn med en knapp, så hamnar
   Mulle Meck i Steam-biblioteket. Skärmtangentbordet kommer upp när du
   skriver ditt namn.
