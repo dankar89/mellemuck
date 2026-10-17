@@ -22,7 +22,11 @@ fi
 # Mulle needs none of it).
 BIG_RH="$BUILD/dists/scummvm_rc_engine_data_big.rh"
 [[ -s "$BIG_RH" ]] && rm -f "$BIG_RH"
-make -C "$BUILD" -j"$(nproc)" DIST_FILES_ENGINEDATA_BASE_BIG= >"$BUILD/build.log" 2>&1 || { tail -20 "$BUILD/build.log"; exit 1; }
+# No paths of this machine in the binary (ScummVM's messages carry __FILE__):
+# /home/<user>/src/scummvm/... is written as src/scummvm/... . After changing
+# this, `make -C "$BUILD" clean` once: make does not see a changed CXX.
+CXX_MAP="$(sed -n 's/^CXX := //p' "$BUILD/config.mk") -ffile-prefix-map=$HOME/="
+make -C "$BUILD" -j"$(nproc)" CXX="$CXX_MAP" DIST_FILES_ENGINEDATA_BASE_BIG= >"$BUILD/build.log" 2>&1 || { tail -20 "$BUILD/build.log"; exit 1; }
 
 mkdir -p "$DIST"
 x86_64-w64-mingw32-strip -o "$DIST/scummvm.exe" "$BUILD/scummvm.exe"

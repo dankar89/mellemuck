@@ -56,6 +56,15 @@ settings "$L/scummvm.ini"
 sed -i 's/\r$//' "$L/scummvm.ini"
 texts "$L"
 
+# Python's caches (made when the package ran here: they hold this machine's
+# paths; Python makes them again) and pip's command scripts (their first line
+# is this machine's path to the package's Python; the launcher needs none).
+find "$STAGE" -type d -name __pycache__ -prune -exec rm -rf {} +
+find "$STAGE" -type f -name '*.pyc' -delete
+for bin in "$L/runtime/bin" "$W/linux/runtime/bin"; do
+	find "$bin" -mindepth 1 -maxdepth 1 ! -name python ! -name python3 ! -name python3.12 -exec rm -rf {} +
+done
+
 # The check: nothing from a disc or made from one, no personal details.
 fail=0
 while IFS= read -r -d '' f; do
@@ -66,8 +75,17 @@ done < <(find "$STAGE" \( -iname '*.dxr' -o -iname '*.cxt' -o -iname '*.cst' -o 
 	-o -iname 'launcher.json' -o -iname '*.log' -o -iname 'garygadget*' \
 	-o \( -type d \( -name games -o -name saves -o -name cache -o -name HD -o -name hd-work \) \) \) -print0)
 # This machine's user name is read here, never written into the file.
-if grep -r -l -I -i -E "192\\.168\\.|/mnt/c/Users/[a-z]|C:\\\\Users\\\\[a-z]|/home/$(id -un)/" "$STAGE" \
-	--exclude-dir=Lib --exclude-dir=lib --exclude='*.patch' 2>/dev/null; then
+# Binary files too (compiled code keeps source paths). The names are this
+# machine's, read here (never written into this file): its Linux and Windows
+# user names and the Steam Deck address the launcher remembered.
+me="$(id -un)"
+winme="$(sed -n 's|^/mnt/c/Users/\([^/]*\)/.*|\1|p' <<<"$ROOT")"
+deck="$("$PY" -c 'import json,sys; print(json.load(open(sys.argv[1])).get("deck_host",""))' "$WIN/launcher.json" 2>/dev/null || true)"
+mine="/home/$me/|/mnt/c/Users/"
+[[ -n "$winme" ]] && mine="$mine|Users[/\\\\]$winme[/\\\\]"
+[[ $deck =~ ^[0-9.]+$ ]] && mine="$mine|${deck//./\\.}"
+if grep -r -l -a -i -E "$mine" "$STAGE" \
+	--exclude='*.patch' 2>/dev/null; then
 	echo "release: personal details in the files above" >&2
 	fail=1
 fi

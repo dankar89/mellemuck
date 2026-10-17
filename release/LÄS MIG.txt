@@ -134,6 +134,10 @@ filen scummvm.log, som finns här (klistra in i Utforskarens adressfält):
 
   %APPDATA%\ScummVM\Logs
 
+Loggen stannar på din dator tills du skickar den själv. Den visar var
+mappen ligger på datorn (ofta med ditt användarnamn) och namnen ni skrivit
+in i spelen. Vill du inte dela det, skriv bara vad som hände.
+
 Det här är ett hobbyprojekt av fans. Det har inget med Mulle Meck-böckerna
 eller spelens utgivare att göra. Mulle Meck och spelen tillhör sina
 upphovspersoner. Programmen här är fria (se LICENSER.txt).

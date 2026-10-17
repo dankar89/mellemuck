@@ -24,7 +24,11 @@ PYTGZ="$PL/cpython-$PYVER+$PYTAG-x86_64-unknown-linux-gnu-install_only_stripped.
 ESRZIP="$PL/realesrgan-ncnn-vulkan-20220424-ubuntu.zip"
 
 [[ -f "$BUILD/config.mk" ]] || { echo "build-linux: $BUILD is not configured (see docs/tooling.md)" >&2; exit 1; }
-make -C "$BUILD" -j"$(nproc)" >"$BUILD/build.log" 2>&1 || { tail -20 "$BUILD/build.log"; exit 1; }
+# No paths of this machine in the binary (ScummVM's messages carry __FILE__):
+# /home/<user>/src/scummvm/... is written as src/scummvm/... . After changing
+# this, `make -C "$BUILD" clean` once: make does not see a changed CXX.
+CXX_MAP="$(sed -n 's/^CXX := //p' "$BUILD/config.mk") -ffile-prefix-map=$HOME/="
+make -C "$BUILD" -j"$(nproc)" CXX="$CXX_MAP" >"$BUILD/build.log" 2>&1 || { tail -20 "$BUILD/build.log"; exit 1; }
 
 mkdir -p "$DIST" "$PL"
 strip -o "$DIST/scummvm" "$BUILD/scummvm"
