@@ -12,7 +12,7 @@ found here with their HD art, the pictures, and only if the Deck has none yet
 the saves and settings. What is already there with the same size and time is
 skipped. Last it puts Mulle Meck in Steam's library with its artwork, through
 the Steam client's own API on its debugging port (steam_shortcut.py, from the
-user's another project project; Decky Loader turns the port on), or SteamOS's
+user's other projects; Decky Loader turns the port on), or SteamOS's
 steamos-add-to-steam without it.
 
 SteamOS has SSH, off until the user sets a password and starts it once

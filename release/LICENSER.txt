@@ -1,0 +1,43 @@
+LICENSER
+========
+
+Mulle Meck-spelen själva ingår inte och tillhör sina upphovspersoner.
+Allt i den här mappen är fri programvara eller fria filer. Licenstexterna
+finns i mappen "licenser".
+
+ScummVM (scummvm.exe, linux/scummvm)
+  GNU General Public License version 3 (licenser/ScummVM-GPL-3.0.txt).
+  Byggd från ScummVM (https://www.scummvm.org, commit c420cad105) med
+  det här projektets ändringar: källkod/scummvm-mulle.patch, och på
+  https://github.com/dankar89/mellemuck. I scummvm.exe ingår också
+  FreeType (licenser/FreeType-FTL.txt; portions of this software are
+  copyright © The FreeType Project, www.freetype.org. All rights
+  reserved.), libpng (licenser/libpng.txt) och zlib (licenser/zlib.txt).
+
+SDL2 (SDL2.dll)
+  zlib-licensen (licenser/SDL2.txt).
+
+Startprogrammet "Mulle Meck" (runtime/app/launcher, runtime/app/tools)
+  Det här projektets egen kod: https://github.com/dankar89/mellemuck
+
+Python (runtime/, linux/runtime/)
+  Python Software Foundation License (runtime/LICENSE.txt), med
+  pygame-ce och paramiko (LGPL 2.1), numpy, Pillow, cryptography, bcrypt,
+  PyNaCl, cffi, pycparser och invoke (BSD, MIT, Apache 2.0). Varje paket
+  har sin licens i runtime/Lib/site-packages/<paket>.dist-info/.
+
+Real-ESRGAN ncnn Vulkan (runtime/app/third_party/realesrgan-ncnn-vulkan)
+  MIT-licensen (licenser/Real-ESRGAN-ncnn-vulkan.txt), av Xintao Wang.
+  Modellerna realesrgan-x4plus och realesrgan-x4plus-anime: BSD 3-Clause
+  (licenser/Real-ESRGAN.txt).
+  Modellen ultrasharp-4x: "4x-UltraSharp" av Kim2091, Creative Commons
+  Attribution-NonCommercial-ShareAlike 4.0
+  (https://creativecommons.org/licenses/by-nc-sa/4.0/), här omvandlad
+  till ncnn-format. Får bara användas icke-kommersiellt.
+
+Typsnitt (data/, linux/data/)
+  Fredoka (licenser/Fredoka-OFL.txt) och Liberation
+  (licenser/Liberation-OFL.txt): SIL Open Font License 1.1.
+
+Ikoner
+  Lucide (licenser/Lucide-ISC.txt): ISC-licensen.

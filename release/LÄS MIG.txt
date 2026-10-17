@@ -1,0 +1,136 @@
+MULLE MECK - de gamla spelen på en ny dator
+===========================================
+Version {VERSION}
+
+Här kan du spela de gamla Mulle Meck-spelen från 90-talet på en vanlig
+dator med Windows 10 eller 11, och på Steam Deck. Med handkontroll om du
+vill, och med skarpare bilder (HD) om du vill.
+
+Testat på Windows och Steam Deck. Linux-versionen är inte testad på andra
+datorer än Steam Deck.
+
+  Bygg bilar med Mulle Meck     fungerar
+  Bygg båtar med Mulle Meck     fungerar
+  Bygg hus med Mulle Meck       fungerar
+  Upptäck rymden med Mulle Meck kommer senare
+
+Spelen själva ingår INTE. Du behöver din egen kopia: skivan, eller en
+skivavbild (en .iso-fil) eller en .zip-fil med spelet.
+
+
+SÅ HÄR KOMMER DU IGÅNG
+----------------------
+
+1. Packa upp zip-filen.
+   Högerklicka på zip-filen och välj "Extrahera alla...". Lägg mappen
+   någonstans där du hittar den, till exempel på Skrivbordet eller i
+   Dokument. (Inte i "Program Files": där får spelen inte spara.)
+
+2. Öppna mappen "MulleMeck" och dubbelklicka på "Mulle Meck.exe".
+
+   Säger Windows "Windows skyddade datorn"? Det står så för alla program
+   som inte kommer från ett stort företag. Klicka på "Mer information"
+   och sedan på "Kör ändå".
+
+3. Klicka på "Hitta spelet".
+   Ha skivan i datorn, eller spelfilen (.iso eller .zip) i Hämtade filer,
+   på Skrivbordet eller i Dokument. Då hittar Mulle Meck den själv. Annars
+   får du peka ut filen. Spelet kopieras in; det tar en liten stund.
+
+4. Klicka på den gula knappen "Spela". Klart!
+
+Med pilarna (eller handkontrollen) bläddrar du mellan spelen.
+
+
+SKARPARE BILDER (HD)
+--------------------
+
+Knappen "Gör HD-bilder" ritar om spelets bilder i högre upplösning. Det
+görs på din egen dator, med datorns grafikkort, och tar ungefär 15-50
+minuter per spel. Du kan spela under tiden; de bilder som är klara syns
+direkt. När det är klart blir knappen en strömbrytare: "HD på" / "HD av".
+I spelet byter F6 mellan HD och de vanliga bilderna.
+
+Det kräver ett grafikkort som klarar Vulkan (de flesta från de senaste
+tio åren). Fungerar det inte syns ett rött kryss, och spelet går ändå att
+spela med de vanliga bilderna.
+
+
+SÅ STYR DU
+----------
+
+  Mus                 som i originalet
+  Handkontroll        vänster spak flyttar handen, A klickar
+  När du kör bil      peka med vänster spak dit bilen ska,
+                      A = gas, B = broms/back
+  När du kör båt      peka med vänster spak dit båten ska; den åker
+                      av sig själv (med segel: A och B sköter seglet)
+  Esc, F5 eller Start pausmenyn: spara, ladda, fönster/helskärm, avsluta
+  F6                  HD på/av
+  Alt+Enter           helskärm på/av
+
+Spelet sparar av sig självt när du går från ett ställe till ett annat.
+Varje spelare (namnet du skriver in när spelet börjar) har sina egna
+sparningar. I pausmenyn kan du också spara och ladda själv.
+
+
+STEAM DECK
+----------
+
+Mulle Meck kopieras till Steam Deck från datorn, med spelen och
+HD-bilderna:
+
+1. På Steam Deck, en gång: tryck på Steam-knappen, välj Ström och
+   "Växla till skrivbordsläge". Öppna programmet Konsole och skriv
+
+     passwd
+
+   (välj ett lösenord och skriv det två gånger; det syns inte när du
+   skriver) och sedan
+
+     sudo systemctl enable --now sshd
+
+   Gå sedan tillbaka till spelläget (ikonen "Return to Gaming Mode" på
+   skrivbordet).
+
+2. På datorn: klicka på handkontrollsknappen uppe i hörnet i Mulle Meck.
+   Skriv Steam Decks adress (steamdeck brukar fungera) och lösenordet du
+   valde. Välj var Mulle Meck ska ligga och klicka "Kopiera hit".
+
+3. Mulle Meck dyker upp i Steam-biblioteket på Steam Deck.
+
+Datorn och Steam Deck måste vara på samma nätverk. Nästa gång behövs inget
+lösenord, och bara det som är nytt kopieras.
+
+
+LINUX
+-----
+
+Det finns en version för Linux också (MulleMeck-Linux.tar.gz), men den
+är inte testad på andra datorer än Steam Deck. Packa
+upp den och starta "Mulle Meck" i mappen (dubbelklicka, eller skriv
+./"Mulle Meck" i en terminal). Den behöver en ganska ny Linux (glibc 2.38
+eller nyare, till exempel Ubuntu 24.04) med SDL2, libpng och FreeType,
+som de flesta har. Resten fungerar som på Windows.
+
+
+NY VERSION
+----------
+
+Packa upp den nya versionen bredvid den gamla. Flytta sedan mapparna
+"games" och "saves" från den gamla mappen MulleMeck till den nya. Då
+följer spelen, HD-bilderna och alla sparningar med.
+
+
+OM NÅGOT KRÅNGLAR
+-----------------
+
+Skriv till oss på GitHub: https://github.com/dankar89/mellemuck/issues
+Berätta vilket spel, vad du gjorde och vad som hände. Skicka gärna med
+filen scummvm.log, som finns här (klistra in i Utforskarens adressfält):
+
+  %APPDATA%\ScummVM\Logs
+
+Det här är ett hobbyprojekt av fans. Det har inget med Mulle Meck-böckerna
+eller spelens utgivare att göra. Mulle Meck och spelen tillhör sina
+upphovspersoner. Programmen här är fria (se LICENSER.txt).
