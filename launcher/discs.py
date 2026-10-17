@@ -159,9 +159,12 @@ def places():
 	then the user's own folders."""
 	out = []
 	if sys.platform == "win32":
+		import ctypes
 		for letter in string.ascii_uppercase[2:]:  # not A: and B:
 			root = Path(f"{letter}:\\")
-			if letter != "C" and root.exists():
+			# Not network drives (4): a slow or gone one would keep the search
+			# waiting; nor letters with no drive (1).
+			if letter != "C" and ctypes.windll.kernel32.GetDriveTypeW(str(root)) not in (0, 1, 4) and root.exists():
 				out.append((root, 0))
 	else:
 		for base in (Path("/media"), Path("/run/media"), Path("/mnt")):
@@ -179,16 +182,20 @@ def places():
 SKIP = {"appdata", "node_modules", "$recycle.bin", "windows", "program files", "program files (x86)"}
 
 
-def search(game_id=None):
-	"""Sources found in the usual places: {game id: Source}, the first for each
-	game (drives first). Each place is walked once, MAX_DEPTH folders deep for
-	images and zips and two more for a copied disc's marker. game_id: stop
-	once that game is found."""
-	found = {}
+def sources(stop=None):
+	"""Every Source in the usual places, in search order: drives first; in each
+	place a copied disc's folder, then plain images, then zips (they come in
+	without unpacking twice). Each place is walked once, MAX_DEPTH folders deep
+	for images and zips and two more for a copied disc's marker. stop(): True
+	ends the search (the player cancelled)."""
 	for place, depth in places():
+		if stop and stop():
+			return
 		paths, images = [], []
 		try:
 			for root, dirs, files in os.walk(place):
+				if stop and stop():
+					return
 				rel = Path(root).relative_to(place)
 				level = len(rel.parts)
 				dirs[:] = [d for d in dirs if not d.startswith(".") and d.lower() not in SKIP] if level < depth + 2 else []
@@ -200,18 +207,39 @@ def search(game_id=None):
 		except OSError:
 			continue
 		for game, prefix in games_in(paths).items():
-			if game.id not in found:
-				found[game.id] = Source("drive" if depth == 0 else "folder", place, game, prefix)
-		# Plain images before zips: they come in without unpacking twice.
+			yield Source("drive" if depth == 0 else "folder", place, game, prefix)
 		for image in sorted(images, key=lambda p: p.suffix.lower() != ".iso"):
-			if game_id in found:
-				break
+			if stop and stop():
+				return
 			src = identify(image, around=False)
-			if src and src.game.id not in found:
-				found[src.game.id] = src
+			if src:
+				yield src
+
+
+def search(game_id=None):
+	"""Sources found in the usual places: {game id: Source}, the first for each
+	game. game_id: stop once that game is found."""
+	found = {}
+	for src in sources():
+		found.setdefault(src.game.id, src)
 		if game_id in found:
 			break
 	return found
+
+
+def find_all(game_id, exclude=None, stop=None):
+	"""Every copy of one game in the usual places (so the player can choose,
+	e.g. between versions), not those under exclude (the launcher's own
+	games/ folder)."""
+	out = []
+	for src in sources(stop):
+		if src.game.id != game_id:
+			continue
+		where = src.path / src.prefix if src.kind in ("drive", "folder") and src.prefix else src.path
+		if exclude is not None and Path(where).resolve().is_relative_to(Path(exclude).resolve()):
+			continue
+		out.append(src)
+	return out
 
 
 def bring_in(source, dest, progress=None):

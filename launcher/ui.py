@@ -27,6 +27,7 @@ from PIL import Image, ImageDraw, ImageFilter
 
 from . import deck, discs, library
 from .deckpanel import DeckPanel
+from .findpanel import FindPanel
 from .hdpanel import HDPanel
 
 PROJECT = Path(__file__).resolve().parent.parent
@@ -461,6 +462,8 @@ class Launcher:
 			self.play(game)
 		elif kind == "folder":
 			self.choose_files(game)
+		elif kind == "swap":
+			self.choose_files(game, replacing=True)
 		elif kind == "hd":
 			# Making: pause. Made: HD on or off for this game. Paused: go on.
 			# Not started: first say what it does and how long it takes
@@ -508,24 +511,20 @@ class Launcher:
 				g.refresh(hd=not busy)
 		threading.Thread(target=work, daemon=True).start()
 
-	def choose_files(self, game):
-		"""Find the game: first by itself in the usual places (drives, Downloads,
-		Desktop, Documents), then, if it is not there, in a file dialog. Disc
+	def choose_files(self, game, replacing=False):
+		"""Where the game's files come from, the player's choice (findpanel.py):
+		searched for in the usual places (drives, Downloads, Desktop,
+		Documents), every copy found listed, or picked in a file dialog. Disc
 		images, zips, discs and copied folders all work (discs.py). The files go
-		into games/<id>/, so a Steam Deck copy gets them too."""
-		if game.info.id in self.copying or game.info.id in self.searching:
+		into games/<id>/, so a Steam Deck copy gets them too. replacing: a
+		game already there gets other files (another version)."""
+		if game.info.id in self.copying or self.game_process is not None:
 			return
-		threading.Thread(target=self.find_game, args=(game,), daemon=True).start()
+		self.panel = FindPanel(self, game, replacing)
 
-	def find_game(self, game):
-		self.searching.add(game.info.id)
-		try:
-			source = discs.search(game.info.id).get(game.info.id)
-		except Exception as e:
-			print(f"launcher: search: {e}", file=sys.stderr)
-			source = None
-		self.searching.discard(game.info.id)
-		if source is None:
+	def pick_and_bring(self, game):
+		"""The system's file dialog, then that copy in (a thread: the dialog waits)."""
+		def work():
 			picked = pick_file()
 			if not picked:
 				return
@@ -533,10 +532,20 @@ class Launcher:
 			if source is None:
 				self.show_toast("x")
 				return
+			self.bring_in(game, source)
+		threading.Thread(target=work, daemon=True).start()
+
+	def bring(self, game, source):
+		threading.Thread(target=self.bring_in, args=(game, source), daemon=True).start()
+
+	def bring_in(self, game, source):
 		# A disc of another game goes to that one.
 		target = next((g for g in self.games if g.info.id == source.game.id), game)
 		if target is not game:
 			self.focus = self.games.index(target)
+		# Its HD job (if running) writes into the folder being replaced.
+		if self.job and self.job.running and self.job.game is target:
+			self.job.stop()
 		self.copying[target.info.id] = 0.0
 		try:
 			discs.bring_in(source, target.folder, lambda f: self.copying.__setitem__(target.info.id, f))
@@ -586,9 +595,12 @@ class Launcher:
 			return [Button("folder", primary=True)]
 		# A game the HD job cannot make art for yet; a Steam Deck (it cannot
 		# make HD art: it comes from the PC) without any for this game.
+		# Other files for it (another version): not on a Steam Deck, whose games
+		# come from the PC.
+		swap = [] if deck.on_steamos() else [Button("swap")]
 		if not game.info.hd or not (self.can_make_hd or game.hd.started):
-			return [Button("play", primary=True)]
-		return [Button("play", primary=True), Button("hd")]
+			return [Button("play", primary=True)] + swap
+		return [Button("play", primary=True), Button("hd")] + swap
 
 	def hd_switch(self, game):
 		"""The HD button switches the game's HD art on and off: when the art
@@ -616,7 +628,7 @@ class Launcher:
 			if game.hd.started:
 				return f"HD-bilder pausade {math.floor(game.hd.fraction * 100)} %"
 			return "Gör HD-bilder"
-		return {"play": "Spela", "folder": "Hitta spelet", "soon": "Kommer senare"}.get(kind)
+		return {"play": "Spela", "folder": "Hitta spelet", "swap": "Byt spelfiler", "soon": "Kommer senare"}.get(kind)
 
 	def draw(self, dt):
 		W, H = self.screen.get_size()
@@ -776,7 +788,7 @@ class Launcher:
 		elif b.kind == "hd":
 			self.draw_hd(game, s, center, ink, H)
 		else:
-			name = {"folder": "folder-open", "soon": "hourglass"}[b.kind]
+			name = {"folder": "folder-open", "swap": "arrow-right-left", "soon": "hourglass"}[b.kind]
 			ic = self.assets.icon(name, s * 0.46, ink)
 			self.screen.blit(ic, ic.get_rect(center=center))
 

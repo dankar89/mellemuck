@@ -59,7 +59,8 @@ skivavbild (`.iso`) eller `.zip` med spelet.
    Säger Windows *"Windows skyddade datorn"*? Klicka **Mer information** och
    sedan **Kör ändå**. (Det står så för alla program som inte kommer från ett
    stort företag.)
-3. Klicka **Hitta spelet**.
+3. Klicka **Hitta spelet** och välj **Leta åt mig** (den letar på skivor och i Hämtade filer,
+   Skrivbordet och Dokument) eller **Välj själv**.
 4. Klicka på den gula knappen **Spela**.
 
 Nästa gång kan du starta ett spel direkt med **Bygg bilar.exe**, **Bygg

@@ -128,7 +128,22 @@ What a player may point at:
   with PIL and scaled down; icons from Lucide (`third_party/lucide/`, ISC
   licence), recoloured SVGs (`pygame.image.load_sized_svg`).
 
-## Finding a game (`launcher/discs.py`)
+## Finding a game (`launcher/discs.py`, `launcher/findpanel.py`)
+
+Since 0.1.1 (2026-10-17; the user: "I think the automatic search should be
+optional", "what if we wanna change to another version"): "Hitta spelet"
+opens a panel that asks: "Leta åt mig" (the search below, `find_all()`:
+every copy, not the first only, leaving out the package's own `games/`;
+the copies are listed with where they are, the player picks one) or "Välj
+själv" (the file dialog at once). A found game has a third button, "Byt
+spelfiler" (two arrows; not on a Steam Deck): the same panel, and the new
+files replace the old (`bring_in` keeps the HD art; saves are elsewhere; a
+running HD job for that game is stopped first). Network drives are not
+searched (`GetDriveTypeW` 4: a slow or gone one would keep the search
+waiting). Tested on :97 with a test HOME: question, search, two copies
+listed, one brought in, the swap panel.
+
+Before 0.1.1:
 
 "Hitta spelet" first looks by itself: drives (C: skipped; discs, mounted
 images, USB sticks; on Linux /media, /run/media, /mnt), then Downloads,

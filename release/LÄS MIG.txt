@@ -32,14 +32,18 @@ SÅ HÄR KOMMER DU IGÅNG
    som inte kommer från ett stort företag. Klicka på "Mer information"
    och sedan på "Kör ändå".
 
-3. Klicka på "Hitta spelet".
-   Ha skivan i datorn, eller spelfilen (.iso eller .zip) i Hämtade filer,
-   på Skrivbordet eller i Dokument. Då hittar Mulle Meck den själv. Annars
-   får du peka ut filen. Spelet kopieras in; det tar en liten stund.
+3. Klicka på "Hitta spelet". Välj "Leta åt mig" om skivan sitter i
+   datorn eller spelfilen (.iso eller .zip) ligger i Hämtade filer, på
+   Skrivbordet eller i Dokument: då letar Mulle Meck upp den, och har du
+   flera kopior får du välja. Eller välj "Välj själv" och peka ut filen.
+   Spelet kopieras in; det tar en liten stund.
 
 4. Klicka på den gula knappen "Spela". Klart!
 
 Med pilarna (eller handkontrollen) bläddrar du mellan spelen.
+
+Vill du byta till en annan version av ett spel: knappen "Byt spelfiler"
+(två pilar) bredvid "Spela". Sparningarna och HD-bilderna finns kvar.
 
 Nästa gång kan du starta ett spel direkt: "Bygg bilar.exe", "Bygg
 båtar.exe" eller "Bygg hus.exe" i mappen. Vill du ha ett spel på
