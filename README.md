@@ -3,6 +3,10 @@
 De gamla Mulle Meck-spelen från 90-talet, spelbara igen på Windows 10/11 och
 Steam Deck. Samma spel som förr, men med skarpare bilder och utan krångel.
 
+[![Se videon på YouTube](https://img.youtube.com/vi/XW59Y44hDos/maxresdefault.jpg)](https://youtu.be/XW59Y44hDos)
+
+▶ [Se videon på YouTube](https://youtu.be/XW59Y44hDos) (1 minut)
+
 > **Testat på Windows och Steam Deck.** Det finns en Linux-version också,
 > men den är inte testad på andra datorer än Steam Deck.
 
