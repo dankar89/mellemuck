@@ -320,8 +320,10 @@ garage without errors. Original findings with unpatched master `c420cad105`:
 - Detected as `director:garygadget1` (Windows/Swedish), support level
   *unstable*. No game-specific quirks or patches exist.
 - Startup fails with `Xtra not found: fileio`: ScummVM, like Director 6, only
-  auto-loads Xtras from an `Xtras/` folder. Workaround: copy
-  `DATA/FILEIO.X32` into `XTRAS/` (mimics the installer).
+  auto-loads Xtras from an `Xtras/` folder. Workaround then: copy
+  `DATA/FILEIO.X32` into `XTRAS/` (mimics the installer). Fixed in the
+  engine since 2026-10-17 ([scummvm](scummvm.md) 122): a copy straight from
+  the disc starts.
 - Then the Levande Böcker logo plays correctly (dissolve transition included),
   followed by a Lingo failure: `cb_theassign: no me object` ->
   `b_sort can not handle argument of type VOID` -> `b_count` error. Many

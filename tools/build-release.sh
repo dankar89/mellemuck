@@ -37,7 +37,7 @@ texts() {
 	mkdir -p "$1/källkod"
 	cp "$ROOT/patches/scummvm-mulle.patch" "$1/källkod/"
 	printf 'ScummVM med Mulle Meck-ändringarna:\nhttps://github.com/scummvm/scummvm, commit %s,\nmed scummvm-mulle.patch (git apply). Mer: https://github.com/dankar89/mellemuck\n' \
-		"$(git -C "$HOME/src/scummvm" rev-parse --short=10 HEAD~1)" >"$1/källkod/README.txt"
+		"$(git -C "$HOME/src/scummvm" merge-base HEAD origin/master | cut -c1-10)" >"$1/källkod/README.txt"
 }
 
 W="$STAGE/windows/MulleMeck"

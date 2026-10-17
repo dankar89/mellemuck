@@ -4309,10 +4309,10 @@ index 0000000000..2f822b3c89
 +
 +#endif
 diff --git a/engines/director/game-quirks.cpp b/engines/director/game-quirks.cpp
-index 4ed09bbf54..6c3603781d 100644
+index 4ed09bbf54..be976a1dfd 100644
 --- a/engines/director/game-quirks.cpp
 +++ b/engines/director/game-quirks.cpp
-@@ -223,6 +223,202 @@ static void quirkWarlock() {
+@@ -223,6 +223,207 @@ static void quirkWarlock() {
  	g_director->_fpsLimit = 15;
  }
  
@@ -4354,6 +4354,11 @@ index 4ed09bbf54..6c3603781d 100644
 +// parts are moved to the mouse once per frame too.
 +static void quirkMulleMeckBilar() {
 +	quirkMulleMeckSaves();
++	// The disc keeps FILEIO.X32 in DATA/; its installer copied it to XTRAS/,
++	// the only place Xtras load from. Without it the start fails ("Xtra not
++	// found: fileio", getCDPath) on a copy straight from the disc.
++	g_director->_fileIOType = kXtraObj;
++	g_director->_startXtras.push_back("FileIO");
 +	g_director->_cursorSpriteChannel = 115;
 +	// The part being dragged: Dir's spriteList #drag in the junk pile, garage and yard.
 +	g_director->_dragSpriteChannels["02.DXR"] = 105;
@@ -4515,7 +4520,7 @@ index 4ed09bbf54..6c3603781d 100644
  static void quirkLimit15FPS() {
  	g_director->_fpsLimit = 15;
  }
-@@ -340,6 +536,17 @@ const struct Quirk {
+@@ -340,6 +541,17 @@ const struct Quirk {
  
  	{ "lzone", Common::kPlatformWindows, &quirkLzone },
  
@@ -11186,10 +11191,22 @@ index a4d13e9e76..0458dc1d24 100644
  	bool processInputEvent(LEvent event, int targetId = 0, Common::Point pos = Common::Point(-1, -1));
  
 diff --git a/engines/director/resource.cpp b/engines/director/resource.cpp
-index 32f6106d81..0861495b10 100644
+index 32f6106d81..3ac3681ebe 100644
 --- a/engines/director/resource.cpp
 +++ b/engines/director/resource.cpp
-@@ -609,12 +609,22 @@ void Window::loadXtrasFromPath() {
+@@ -64,6 +64,11 @@ Common::Error Window::loadInitialMovie() {
+ 
+ 	if (g_director->getVersion() >= 500) {
+ 		loadXtrasFromPath();
++		// A game quirk's Xtras, also when the game starts from its projector
++		// (Bygger bilar: FileIO, which its disc keeps outside Xtras/);
++		// loadStartMovieXLibs() below does it only for a start movie.
++		for (auto &name : g_director->_startXtras)
++			g_lingo->openXLib(name, kXtraObj, Common::Path());
+ 	}
+ 	loadINIStream();
+ 	Common::Path path = findPath(movie);
+@@ -609,12 +614,22 @@ void Window::loadXtrasFromPath() {
  	for (auto &it : targets) {
  		if (it->isDirectory())
  			continue;

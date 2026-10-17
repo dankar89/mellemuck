@@ -8,7 +8,7 @@ The game itself is not changed; the bugs are in the player.
 - Source: `~/src/scummvm`, branch `mulle` (based on master `c420cad105`,
   2026-10-12). Build: see [tooling](tooling.md#scummvm-build).
 - All changes as one patch: `patches/scummvm-mulle.patch`
-  (`git diff > patches/scummvm-mulle.patch` after each change).
+  (`git diff c420cad105 > patches/scummvm-mulle.patch` after each change: our changes are commits on the branch `mulle` on top of that upstream commit).
 - Test flow: `tools/flows/bilar-new-player.sh` boots the game headless,
   creates player "Test", skips the intro and screenshots each step into
   `runs/latest/` (`SLOW=2` when tracing with
@@ -1270,6 +1270,19 @@ most are gated on version 850+ (or 700+) so the D6 games are untouched.
     logs in, is saved, and the boatyard autosaves. (xdotool on Xvfb sent
     Å as å, probably its way of typing a letter the keymap lacks; capitals
     from a real keyboard not tried.)
+122. **Bygger bilar from a copy straight off the disc** (`game-quirks.cpp`
+    `quirkMulleMeckBilar()`, `Window::loadInitialMovie()`; 2026-10-17, the
+    user testing 0.1.1: "Xtra not found: fileio", from `getCDPath` in the
+    start script, over and over). The disc keeps `FILEIO.X32` in `DATA/`;
+    its installer copied it to `XTRAS/`, the only place Xtras load from, and
+    our development copy had it there by hand. The quirk now lists FileIO
+    as a start Xtra (as an Xtra, `_fileIOType`), and start Xtras are now
+    opened at every start, right after the Xtras folder; before, only with
+    a start movie (`loadStartMovieXLibs()`), which Bygg hus has and Bygger
+    bilar, started from its projector, does not. Tested: fresh copies of
+    all three games, made by the launcher's own `discs.bring_in()` from the
+    disc images, start to their first screen without Lingo errors
+    (before: bilar 300-400 "Xtra not found").
 
 ### Director 7-8.5 gaps (2026-10-14, `tools/lingo_audit.py research/lingo-hus`)
 
@@ -1390,9 +1403,8 @@ MacroMix and NetFile Xtras.
       reverse; stick down, the boat turns smoothly. Sail and oar boats not
       tried. Regression check clean (`runs/regress-boat.txt`).
 
-Data-layout workaround (not a code fix yet): copy `DATA/FILEIO.X32` into
-`XTRAS/` in the extracted disc. Director 6 and ScummVM load Xtras only from
-`Xtras/`; the installer put it there. A proper fix is a game quirk.
+(Until fix 122 `DATA/FILEIO.X32` had to be copied into `XTRAS/` by hand;
+that is why the development copy never showed the problem.)
 
 ## Known open issues
 
