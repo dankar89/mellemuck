@@ -1,0 +1,27 @@
+# From the games, or made from them: never committed (CLAUDE.md). Players
+# bring their own disc; the HD art is made on their machine.
+/build/
+/dist/
+/dumps/
+/research/
+/runs/
+/upscale-test/
+/play/
+
+# Large third-party downloads and builds (docs/tooling.md says where they
+# come from). The fonts and icons in third_party/ are committed (OFL, ISC).
+/third_party/python-linux/
+/third_party/python-win/
+/third_party/realesrgan-ncnn-vulkan/
+/third_party/realesrgan.zip
+/third_party/sdl2-mingw/
+/third_party/projectorrays/
+
+# Local state
+/scummvm.ini
+__pycache__/
+*.pyc
+
+# Our working notes (session log, decisions with the user's words): local only
+/docs/handover.md
+/docs/decisions.md
