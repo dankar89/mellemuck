@@ -1,4 +1,4 @@
-# Mulle Meck fan-made remaster
+# Inofficiell Mulle Meck remaster
 
 De gamla Mulle Meck-spelen från 90-talet, spelbara igen på Windows 10/11 och
 Steam Deck. Samma spel som förr, men med skarpare bilder och utan krångel.
